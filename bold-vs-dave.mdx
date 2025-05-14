@@ -17,7 +17,7 @@ We also explore variations and alternatives.
 
 ## Summary
 
-1. For 1L Bold, the cost of defending against an adversary with budget $T$ is proportional to $\sqrt(T)$.  For Dave, this cost is proportional to $\log(T)$.   
+1. For 1L Bold, the cost of defending against an adversary with budget $T$ is proportional to $\sqrt{T}$.  For Dave, this cost is proportional to $\log(T)$.   
 2. Dave allows an adversary to add significant additional delay by just posting a single assertion and without actually censoring. In contrast, 1L Bold cannot be delayed by an adversary that does not censor, no matter how many assertions they post.  
 3. The suggested bond price in the Dave paper is much lower than that suggested for Bold. 
 However, this price is much too low to discourage an adversary from causing significant additional delay. If the same economic arguments that are used for Bold are applied to Dave, the correct bond price for Dave is actually somewhat higher than for Bold.   
@@ -50,9 +50,9 @@ Table 3 of Dave paper \[1\] calculates the cost (in bond size plus gas) to defen
 
 We define $\textit{Cost}$ to be the cost to defend against an adversary with budget $T$.  In the worst case, the adversary might create $T/B$ challenges.  Therefore:
 $$\textit{Cost} \le (T/B) \times P + B.$$  
-This is minimized when $(T/B) \times P = B$, or $B = \sqrt(T P)$. 
-So with $B$ set to $\sqrt(T P)$, we have 
-$$Cost = 2 \times \sqrt(T P)$.$$
+This is minimized when $(T/B) \times P = B$, or $B = \sqrt{T P}$. 
+So with $B$ set to $\sqrt{T P}$, we have 
+$$Cost = 2 \times \sqrt{T P}.$$
 
 This justifies the claim made above that to defend against an adversary with budget T, the honest defender needs a budget of size proportional to sqrt(T).
 
