@@ -16,7 +16,7 @@ We also explore variations and alternatives.
 
 Summary
 
-1. For 1L bold, the cost of defending against an adversary with budget T is proportional to sqrt(T).  For Dave, this cost is proportional to log(T).   
+1. For 1L Bold, the cost of defending against an adversary with budget $T$ is proportional to $\sqrt(T)$.  For Dave, this cost is proportional to $\log(T)$.   
 2. Dave allows an adversary to add significant additional delay by just posting a single assertion and without actually censoring. In contrast, 1L bold cannot be delayed by an adversary that does not censor, no matter how many assertions they post.  
 3. The suggested bond price in the Dave paper is much lower than that suggested for Bold. However, this price is much too low to discourage an adversary from causing significant additional delay. If the same economic arguments that are used for Bold are applied to Dave, the correct bond price for Dave is actually somewhat higher than for Bold.   
 4. We also explore variations of single-level Bold. One such variation is essentially equivalent to a “single-round Dave” protocol, which has very similar properties to single-level Bold, but with much lower gas costs. In other variations, we look at hybrid protocols that more fully exploit the fact that we are already relying on ZK proof technology – using this technology more fully, but (unlike  in  a ZK rollup) only when there is an actual challenge (which keeps expenses low during normal operation). In fact, this hybrid ZK solution seems to be superior on most metrics than either single-level bold or Dave. This solution has a small bond price and a small fixed cost to defend an assertion, and when there is no challenge, there is no additional cost besides simply posting an assertion.
