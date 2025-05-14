@@ -1,4 +1,4 @@
-References:
+# References:
 
 1. Dave paper [https://arxiv.org/abs/2411.05463](https://arxiv.org/abs/2411.05463)  
 2. Dave blog post: [https://ethresear.ch/t/the-dave-fraud-proof-algorithm/21844](https://ethresear.ch/t/the-dave-fraud-proof-algorithm/21844)   
@@ -12,9 +12,9 @@ The Dave blog post \[2\] mentions Bold \[4\] but only discusses multi-level Bold
 The Dave paper \[1\] does compare Dave to 1L Bold (see Table 3 in that paper). Here, we present a cost analysis of Bold that is based on assumptions that are more closely aligned with the assumptions used to analyze Dave (these assumptions are detailed in the comments section of \[2\]). Then, based on this analysis, we make a comparison between single-level Bold and Dave.
 We also explore variations and alternatives.
 
-\=============
 
-Summary
+
+# Summary
 
 1. For 1L Bold, the cost of defending against an adversary with budget $T$ is proportional to $\sqrt(T)$.  For Dave, this cost is proportional to $\log(T)$.   
 2. Dave allows an adversary to add significant additional delay by just posting a single assertion and without actually censoring. In contrast, 1L bold cannot be delayed by an adversary that does not censor, no matter how many assertions they post.  
