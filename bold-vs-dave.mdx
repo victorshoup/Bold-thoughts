@@ -49,12 +49,10 @@ Table 3 of Dave paper \[1\] calculates the cost (in bond size plus gas) to defen
 * $P$ \= path cost
 
 We define $\textit{Cost}$ to be the cost to defend against an adversary with budget $T$.  In the worst case, the adversary might create $T/B$ challenges.  Therefore:
-
-
-$$\textit{Cost} \le (T/B) \cdot P + B$$  
-
-This is minimized when (T/B) x P \= B, or B \= sqrt(T P)  
-So with B set to sqrt(T P), we have Cost \= 2 x sqrt(T P)
+$$\textit{Cost} \le (T/B) \times P + B.$$  
+This is minimized when $(T/B) \times P = B$, or $B = \sqrt(T P)$. 
+So with $B$ set to $\sqrt(T P)$, we have 
+$$Cost = 2 \times \sqrt(T P)$.$$
 
 This justifies the claim made above that to defend against an adversary with budget T, the honest defender needs a budget of size proportional to sqrt(T).
 
