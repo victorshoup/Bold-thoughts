@@ -1,11 +1,6 @@
 # Fraud Proof Protocols: Bold, Dave, and other alternatives 
 
-## References:
 
-1. Dave paper [https://arxiv.org/abs/2411.05463](https://arxiv.org/abs/2411.05463)  
-2. Dave blog post: [https://ethresear.ch/t/the-dave-fraud-proof-algorithm/21844](https://ethresear.ch/t/the-dave-fraud-proof-algorithm/21844)   
-3. Cartesi paper: [https://arxiv.org/abs/2212.12439](https://arxiv.org/abs/2212.12439)   
-4. Bold paper: [https://arxiv.org/abs/2404.10491](https://arxiv.org/abs/2404.10491)
 
 ## Introduction
 
@@ -140,4 +135,11 @@ By contrast, neither (single-level) Bold nor any of the variations discussed abo
 In the Dave paper, it is suggested that very small bonds can be used – they suggest 3 eth. But if this is done, then the adversary can capriciously choose to significantly delay the protocol at quite low cost. For example, for just 3 eth, the adversary can cause an extra delay of 1.75 days, without actually censoring. Any additional delay incurs opportunity cost and a degraded user experience for users that want to withdraw assets, and the bond should be priced high enough to discourage imposing this additional delay. A reasonable strategy is to ensure that the bond price is at least the value of this opportunity cost.
 
 To be extremely conservative, consider a bank-run scenario. The Arbitrum One bridge ([https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a](https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a)) currently (as of April 2025\) contains about 1M eth. Assuming funds could earn 5% APY, then the opportunity cost of delaying the withdraw of 1M eth for 1.75 days is \~ 0.2K eth.  This is quite a bit larger than the bond price of 3 eth suggested in the Dave paper, which did not take such considerations into account at all.
+
+## References:
+
+1. Dave paper [https://arxiv.org/abs/2411.05463](https://arxiv.org/abs/2411.05463)  
+2. Dave blog post: [https://ethresear.ch/t/the-dave-fraud-proof-algorithm/21844](https://ethresear.ch/t/the-dave-fraud-proof-algorithm/21844)   
+3. Cartesi paper: [https://arxiv.org/abs/2212.12439](https://arxiv.org/abs/2212.12439)   
+4. Bold paper: [https://arxiv.org/abs/2404.10491](https://arxiv.org/abs/2404.10491)
 
