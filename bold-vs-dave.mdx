@@ -127,29 +127,17 @@ We can also significantly simplify the above hybrid interactive fraud proof prot
 
 Another tradeoff to consider is that any protocol that involves ZK proving entire assertions may be criticized for having a somewhat centralized nature. At the very least, such a protocol may require some amount of coordination among honest parties to carry out a rather large scale distributed ZK proving computation. That said, the ZK proving can be fairly easily distributed among honest parties in a fairly trustless manner without too much coordination: different parties can generate proofs for different blocks, which can be verified by other honest parties and then “glued” together using standard recursion techniques (i.e., generating a proof that essentially says “I know proofs for a bunch of individual blocks”, which proves the entire assertion). The same type of criticism may also be directed towards single-level Bold or one-round Dave, if the honest parties are required to generate many ZK proofs to defend against a large number of challengers.
 
-\=============
 
-Dave delay costs   
-\[Maybe this should be placed earlier?\]
+
+## Dave delay costs   
+
 
 The main drawback of Dave is that just by posting a small number of assertions, the adversary can add significant additional delay to the protocol, even if the adversary *does not actively censor* (which would likely be quite difficult and/or expensive to actually do).  
 For example, by posting just 8 assertions, the adversary can cause the protocol to run for 12 days – that’s 5 days more than the normal delay of 7 days. (Table 4 in the Dave paper indicates that such a delay can be achieved by posting 15 adversarial assertions. By direct calculation, we determined that this already happens with just 8 adversarial assertions.) Moreover, by posting just a *single* assertion, the adversary can cause an additional delay of 1.75 days (21 rounds at 10 hours per round, as per in Dave paper); moreover, if the adversary is able to actually censor for up to 7 days, then the additional delay becomes 10 days (the adversary can actually win in 20 of the 21 rounds by censoring, so there may be 40 rounds instead of 21).  
    
-By contrast, neither (single-level) Bold nor any of the variations discussed above have this characteristic: if the adversary does not censor, there is no additional delay above the usual 7 day delay (except for the small amount of time needed to make the necessary protocol moves, which is on the order of a few hours); moreover, if the adversary is able to censor up to 7 days, then the additional delay is (approximately) 7 days.
+By contrast, neither (single-level) Bold nor any of the variations discussed above have this characteristic: if the adversary does not actually censor, there is no additional delay above the usual 7 day delay (except for the small amount of time needed to make the necessary protocol moves, which is on the order of a few hours); moreover, if the adversary is able to censor up to 7 days, then the additional delay is (approximately) 7 days.
 
 In the Dave paper, it is suggested that very small bonds can be used – they suggest 3 eth. But if this is done, then the adversary can capriciously choose to significantly delay the protocol at quite low cost. For example, for just 3 eth, the adversary can cause an extra delay of 1.75 days, without actually censoring. Any additional delay incurs opportunity cost and a degraded user experience for users that want to withdraw assets, and the bond should be priced high enough to discourage imposing this additional delay. A reasonable strategy is to ensure that the bond price is at least the value of this opportunity cost.
 
 To be extremely conservative, consider a bank-run scenario. The Arbitrum One bridge ([https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a](https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a)) currently (as of April 2025\) contains about 1M eth. Assuming funds could earn 5% APY, then the opportunity cost of delaying the withdraw of 1M eth for 1.75 days is \~ 0.2K eth.  This is quite a bit larger than the bond price of 3 eth suggested in the Dave paper, which did not take such considerations into account at all.
-
-\[I don't think we need the following. I wanted to calculate the amount of delayed withdrawals, taking into account the fact that if assertions are posted once every hour, and if a given assertion suffers additional delay Delta, the following assertion is delayed an extra Delta \- 1 hour, the next Delta \- 2 hours, and so on. We can decide if this fits somewhere.\]
-
-1 eth \~ 2K usd
-
-w \= withdrawal rate \= 80K usd per hour (empirical)  
-c \= cost per hour \= 0.05 / (hours per year)  \= 5.7 x 10^{-6}  
-w c \~ 0.5 usd
-
-Imputed cost \~ intl\_0^Delta w c x dx \= w c Delta^2 / 2, where Delta \= delay  
-Delay \= 5 days \= 120 hours  
-Imputed cost \= w c Delta^2 / 2 \~ 0.5 x 0.5 x 120^2 \~ 3600 usd \~ 1.8 eth
 
