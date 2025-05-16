@@ -99,19 +99,17 @@ Note that we set the base bond price equal to $P$, which is the minimum possible
 
 A useful observation is that if a defender has to fight off a large number of challenge assertions, it may well be cheaper to simply prove all the blocks of an assertion. In Bold, an assertion is made once an hour with 4 blocks generated per second, for a total of \< 15K blocks. (This is much smaller than 2<sup>26</sup>, and the reason for using such a huge upper bound requires an examination of a number of details of Bold that we will not get into here. Instead, we will simply use this 15K estimate.)
 
-According to  [https://zkrollup.wtf/ethereum/g6.xlarge/reserved](https://zkrollup.wtf/ethereum/g6.xlarge/reserved) the 
-average cost of proving an ethereum block is $0.088  (as measured at the time of writing, April 2025). 
-We also have
+According to  [https://zkrollup.wtf/ethereum/g6.xlarge/reserved](https://zkrollup.wtf/ethereum/g6.xlarge/reserved) the average cost of proving an ethereum block is $0.088  (as measured at the time of writing, April 2025). We also have
 * L1 has a gas target of 15M per block (12 seconds)  
 * Arbitrum One has a gas target of 7M per second.  
 
-So Arbitrum One has a target of 1.75M per block. So per Arbitrum One block, that’s $0.088 x 1.75/15 \= \~ $0.01. So that means the cost of simply proving the entire assertion as a ZK proof is about 150 usd. Using an exchange rate of 1 eth \= 2K usd, this is 0.075 eth.  
-This is the proving cost of Ethereum blocks.  
-Arbitum actually uses an extension of EVM (Stylus) that allows for much greater computation per gas, so let’s multiply this cost by 10 to be on the safe side, obtaining a proving cost of 0.75 eth per assertion.
+So Arbitrum One has a target of 1.75M per block. So per Arbitrum One block, that’s $0.088 x 1.75/15 \= \~ $0.01. So that means the cost of simply proving the entire assertion as a ZK proof is about 150 usd. Using an exchange rate of 1 eth \= 2K usd, this is 0.075 eth. This is the proving cost of Ethereum blocks. Arbitrum actually uses an extension of EVM (Stylus) that allows for much greater computation per gas, so let’s multiply this cost by 10 to be on the safe side, obtaining a proving cost of 0.75 eth per assertion.
 
-Using this, we can bound Cost as follows.  
-Let A be the cost of generating a ZK proof plus the gas cost for verifying such a proof for the entire assertion (A \= 0.75 eth \+ 0.03 eth \<= 0.8 eth).  
-It makes no sense to spend more than A eth on gas fees, as we can more cheaply just generate the proof.
+Using this, we can bound $\mathit{Cost}$ as follows. Let $A$ be the cost of generating a ZK proof plus the gas cost for verifying such a proof for the entire assertion
+
+$$A = 0.75 \textrm{eth} + 0.03 \textrm{eth} \le 0.8 \textrm{eth}.$$
+
+It makes no sense to spend more than $A$ eth on gas fees, as we can more cheaply just generate the proof.
 
 So we get Cost \<= 2 A \+ B \<= 1.6eth \+ B.  
 To force the defender to spend A on gas, the adversary must post N bonds so that N P \>= A, so N 0.08 \>= 0.8, or N \>= 10\. (Here, we are using the P value taken from the above single-round Dave estimate.) So in other words, if the adversary makes N assertions, where we can take N=10, we stop playing the interactive game and just post a single ZK proof for the entire assertion.  To ensure the defender can be reimbursed from confiscated bonds, we need B \>= P and N B \>= (N-1) P \+ A. Using our estimates, we can take B \= 0.16 eth. Therefore, Cost \<= 2 A \+ B \<= 1.6 eth \+ 0.16 eth \<= 1.8 eth.
