@@ -105,12 +105,9 @@ We also have
 * L1 has a gas target of 15M per block (12 seconds)  
 * Arbitrum One has a gas target of 7M per second.  
 
-So Arbitrum One has a target of 1.75M per block.  
-So per Arbitrum One block, that’s $0.088 x 1.75/15 \= \~ $0.01.
-
-So that means the cost of simply proving the entire assertion as a ZK proof is about 150 usd. Using an exchange rate of 1 eth \= 2K usd, this is 0.075 eth.  
+So Arbitrum One has a target of 1.75M per block. So per Arbitrum One block, that’s $0.088 x 1.75/15 \= \~ $0.01. So that means the cost of simply proving the entire assertion as a ZK proof is about 150 usd. Using an exchange rate of 1 eth \= 2K usd, this is 0.075 eth.  
 This is the proving cost of Ethereum blocks.  
-Arbitum uses an extension of EVM (Stylus) that allows for much greater computation per gas, soand let’s multiply this cost by 10 to be on the safe side, obtaining a proving cost of 0.75 eth.
+Arbitum actually uses an extension of EVM (Stylus) that allows for much greater computation per gas, so let’s multiply this cost by 10 to be on the safe side, obtaining a proving cost of 0.75 eth per assertion.
 
 Using this, we can bound Cost as follows.  
 Let A be the cost of generating a ZK proof plus the gas cost for verifying such a proof for the entire assertion (A \= 0.75 eth \+ 0.03 eth \<= 0.8 eth).  
