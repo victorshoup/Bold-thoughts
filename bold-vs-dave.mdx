@@ -75,12 +75,11 @@ Using $P$ \= 1.3 eth, we set $B := \sqrt{3M \times 1.3}$ ~ 2K eth, which leads t
 As noted above, bisection costs for Bold are high due to the fact that each bisection writes to fresh storage. It is fruitful to consider a variant of Bold in which these different bisection paths are instead played as independent 1-1 matches. While some bisections near the root may be duplicated, overall this saves in gas because the overall storage costs are much lower. Indeed, this results in a very simple protocol that is essentially Dave with one round and an unbounded number of matches. We will refer to this as “single round Dave”. 
 
 According to the Dave blog post \[2\], one such 1-1 match takes 0.05 eth for bisections plus 300K gas \~ 0.03 eth for proof, so 0.08 eth in total.   
-So we have P \= 0.08 eth.  
-Again with $T$ \= 3M eth, we set $B := \sqrt{3M \times 0.08}$ \~ 0.5K eth  
-$\mathit{Cost} \~ 1K eth  
-Griefing ratio $\rho$ \~ 3K
+So we have P \= 0.08 eth.  Again with $T$ \= 3M eth, we set $B := \sqrt{3M \times 0.08}$ \~ 0.5K eth. Then we have 
+* $\mathit{Cost}$ \~ 1K eth  
+* Griefing ratio $\rho$ \~ 3K
 
-Note: the estimate of 0.05 eth for bisections in Dave is based on a sequence of 2^40 blocks, whereas we only need 2^26. So in actuality, it should be a bit less, namely, 0.04 eth, but we will ignore that here.
+Note: the estimate of 0.05 eth for bisections in Dave is based on a sequence of 2<sup>40</sup> blocks, whereas we only need 2<sup>26</sup>. So in actuality, it should be a bit less, namely, 0.04 eth, but we will ignore that here.
 
 \==============
 
