@@ -6,7 +6,7 @@
 
 BoLD \[4\] is a new fraud proof protocol recently deployed on Arbitrum One. Different fraud proof protocols make different tradeoffs, optimizing one feature, potentially at the expense of others. BoLD is optimized to minimize delay. Other protocols, such as Dave \[1\], are optimized to minimize prover costs. In this note, we explore these tradeoffs, making detailed comparisons between BoLD and Dave. We also explore other possible points in the fraud proof design space.
 
-The Dave blog post \[2\] mentions BoLD \[4\] but only discusses multi-level BoLD, rather than single-level BoLD (1L BoLD), which is not at all a fair comparison. Indeed, Dave inherently relies on ZK proofs to obtain “one step” proofs at the block level, and there is no known multi-level extension of Dave that corresponds to multi-level BoLD, which does not rely on ZK proofs and instead utilizes “one step” proofs at the instruction level.
+The Dave blog post \[2\] mentions BoLD but only discusses multi-level BoLD, rather than single-level BoLD (1L BoLD), which is not at all a fair comparison. Indeed, Dave inherently relies on ZK proofs to obtain “one step” proofs at the block level, and there is no known multi-level extension of Dave that corresponds to multi-level BoLD, which does not rely on ZK proofs and instead utilizes “one step” proofs at the instruction level.
 
 The Dave paper \[1\] does compare Dave to 1L BoLD (see Table 3 in that paper). Here, we present a cost analysis of BoLD that is based on assumptions that are more closely aligned with the assumptions used to analyze Dave (these assumptions are detailed in the comments section of \[2\]). Then, based on this analysis, we make a comparison between 1L BoLD and Dave. We also explore variations and alternatives.
 
