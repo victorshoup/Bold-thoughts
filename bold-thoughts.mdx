@@ -4,11 +4,11 @@
 
 ## Introduction
 
-BoLD \[4\] is a new fraud proof protocol recently deployed on Arbitrum One. Different fraud proof protocols make different tradeoffs, optimizing one feature, potentially at the expense of others. BoLD is optimized to minimize delay. Other protocols, such as Dave \[1\], are optimized to minimize prover costs. In this note, we explore these tradeoffs, making detailed comparisons between BoLD and Dave. We also explore other possible points in the fraud proof design space.
+BoLD \[4\] is a new fraud-proof protocol recently deployed on Arbitrum One. Different fraud-proof protocols make different tradeoffs, optimizing one feature, potentially at the expense of others. BoLD is optimized to minimize delay. Other protocols, such as Dave \[1\], are optimized to minimize prover costs. In this note, we explore these tradeoffs, making detailed comparisons between BoLD and Dave. We also explore other possible points in the fraud-proof design space.
 
-The Dave blog post \[2\] mentions BoLD but only discusses multi-level BoLD, rather than single-level BoLD (1L BoLD), which is not at all a fair comparison. Indeed, Dave inherently relies on ZK proofs to obtain “one step” proofs at the block level, and there is no known multi-level extension of Dave that corresponds to multi-level BoLD, which does not rely on ZK proofs and instead utilizes “one step” proofs at the instruction level.
+The Dave blog post \[2\] mentions BoLD but only discusses multi-level BoLD, rather than single-level BoLD (1L BoLD), which is not at all a fair comparison. Indeed, Dave inherently relies on ZK proofs to obtain “one-step” proofs at the block level, and there is no known multi-level extension of Dave that corresponds to multi-level BoLD, which does not rely on ZK proofs and instead utilizes “one-step” proofs at the instruction level.
 
-The Dave paper \[1\] does compare Dave to 1L BoLD (see Table 3 in that paper). Here, we present a cost analysis of BoLD that is based on assumptions that are more closely aligned with the assumptions used to analyze Dave (these assumptions are detailed in the comments section of \[2\]). Then, based on this analysis, we make a comparison between 1L BoLD and Dave. We also explore variations and alternatives.
+The Dave paper \[1\] does compare Dave to 1L BoLD (see Table 3 in that paper). Here, we present a cost analysis of BoLD based on assumptions more closely aligned with the assumptions used to analyze Dave (these assumptions are detailed in the comments section of \[2\]). Then, based on this analysis, we make a comparison between 1L BoLD and Dave. We also explore variations and alternatives.
 
 
 
@@ -16,8 +16,8 @@ The Dave paper \[1\] does compare Dave to 1L BoLD (see Table 3 in that paper). H
 ### Summary
 
 1. For 1L BoLD, the cost of defending against an adversary with budget ${T}$ is proportional to ${\sqrt{T}}$.  For Dave, this cost is proportional to ${\log(T)}$.   
-2. Dave allows an adversary to add significant additional delay by just posting a single assertion and without actually censoring. In contrast, 1L BoLD cannot be delayed by an adversary that does not censor, no matter how many assertions they post.  
-3. The suggested bond price in the Dave paper is much lower than that suggested for BoLD.  However, as we argue, this price may be much too low to discourage an adversary from causing significant additional delay by making spurious asssertions. 
+2. Dave allows an adversary to add significant additional delay by posting just a single assertion and without actually censoring. In contrast, 1L BoLD cannot be delayed by an adversary that does not censor, no matter how many assertions they post.  
+3. The suggested bond price in the Dave paper is much lower than that suggested for BoLD.  However, as we argue, this price may be much too low to discourage an adversary from causing significant additional delay by making spurious assertions. 
 4. We also explore variations of 1L BoLD. One such variation is essentially equivalent to a “single-round Dave” protocol, which has very similar properties to 1L BoLD, but with much lower gas costs. In other variations, we look at hybrid protocols that more fully exploit the fact that we are already relying on ZK proof technology – using this technology more fully, but (unlike  in  a ZK rollup) only when there is an actual challenge (which keeps expenses low during normal operation). In fact, this hybrid ZK solution seems to be superior on most metrics than either 1L BoLD or Dave. This solution has a small bond price and a small fixed cost to defend an assertion, and when there is no challenge, there is no additional cost besides simply posting an assertion.
 
 ## 1L BoLD Cost Estimates
@@ -28,12 +28,12 @@ Assumptions:
 1. 1 gas \= 100 gwei \= 10<sup>-7</sup> eth
    1. same as in \[2\]  
 2. 1 bisection takes 500K gas   
-   1. based on current BoLD implementation  
+   1. Based on the current BoLD implementation  
    2. The relatively high cost is due to the fact that every bisection writes to fresh storage, which is costly on L1 
 3. 1 ZK proof verification takes 300K gas  
    1. Same as in \[2\]  
 4. Number of bisections in a challenge path: 26  
-   1. Based on current BoLD implementation  
+   1. Based on the current BoLD implementation  
    2. Note that Dave assumes 40 bisections per challenge; however, 26 is enough for the overall design goals of BoLD.  
       
 
@@ -53,7 +53,7 @@ So with ${B}$ set to ${\sqrt{T P}}$, we have
 
 $$C = 2 \times \sqrt{T P}.$$
 
-This justifies the claim made above that to defend against an adversary with budget $T$, the honest defender needs a budget of size proportional to $\sqrt{T}$.
+This justifies the claim made above that to defend against an adversary with a budget of $T$, the honest defender needs a budget of size proportional to $\sqrt{T}$.
 
 We can also define the <i>Griefing ratio</i>
 
@@ -66,7 +66,7 @@ Using ${P}$ \= 1.3 eth, we set $B := \sqrt{3M \times 1.3}$ ~ 2K eth, which leads
 
 ## Single round Dave
 
-As noted above, bisection costs for BoLD are high due to the fact that each bisection writes to fresh storage. It is fruitful to consider a variant of BoLD in which these different bisection paths are instead played as independent 1-1 matches. While some bisections near the root may be duplicated, overall this saves in gas because the overall storage costs are much lower. Indeed, this results in a very simple protocol that is essentially Dave with one round and an unbounded number of matches. We will refer to this as “single round Dave”. 
+As noted above, bisection costs for BoLD are high since each bisection writes to fresh storage. It is fruitful to consider a variant of BoLD in which these different bisection paths are instead played as independent 1-1 matches. While some bisections near the root may be duplicated, this saves in gas overall because the storage costs are much lower. Indeed, this results in a very simple protocol that is essentially Dave with one round and an unbounded number of matches. We will refer to this as “single round Dave”. 
 
 According to the Dave blog post \[2\], one such 1-1 match takes 0.05 eth for bisections plus 300K gas \~ 0.03 eth for proof, so 0.08 eth in total.   
 So we have P \= 0.08 eth.  Again with $T$ \= 3M eth, we set $B := \sqrt{3M \times 0.08}$ \~ 0.5K eth. Then we have 
@@ -79,31 +79,31 @@ Note: the estimate of 0.05 eth for bisections in Dave is based on a sequence of 
 
 ## Dynamic bond strategy
 
-In the BoLD paper (Section 6.3 of \[4\]), a dynamic bond strategy is given. While this does not decrease costs in the worst case, it does not require us to assume any particular value for the adversary’s budget – it scales automatically.
+A dynamic bond strategy is given in the BoLD paper (Section 6.3 of \[4\]). While this does not decrease costs in the worst case, it does not require us to assume any particular value for the adversary’s budget – it scales automatically.
 
 The idea is this: we have a base bond price equal to $P$, and the $i$th assertion posted must post a bond of $i \times P$. 
 
-To analyze this strategy, suppose the adversary posts $N$ assertions. We pessimistically assume the adversary arranges that the honest defender’s assertion is posted last. So the adversary pays bonds equal to \~ ${N^2/2 \times P}$, while the honest defender places a bond equal to \~ ${N \times P}$. If the adversary’ total budget is ${T}$, then he can post at most ${N \sim \sqrt{2T/P}}$ assertions. To the honest defender’s total cost is ${C \sim 2 N P = 2 \sqrt{ 2 T P}}$. This is a small constant factor greater than the cost ${\sqrt{T P}}$ calculated above, but we have the advantage that we do not need to know ${T}$ in advance to set an appropriate bond price. Moreover, when there are actually no active challenges (which will be almost always), the posted bond will actually be very small, so the opportunity cost of keeping a very large bond posted is eliminated.
+To analyze this strategy, suppose the adversary posts $N$ assertions. We pessimistically assume the adversary arranges that the honest defender’s assertion is posted last. So the adversary pays bonds equal to \~ ${N^2/2 \times P}$, while the honest defender places a bond equal to \~ ${N \times P}$. If the adversary’ total budget is ${T}$, then he can post at most ${N \sim \sqrt{2T/P}}$ assertions. To the honest defender’s total cost is ${C \sim 2 N P = 2 \sqrt{ 2 T P}}$. This is a small constant factor greater than the cost ${\sqrt{T P}}$ calculated above, but we have the advantage that we do not need to know ${T}$ in advance to set an appropriate bond price. Moreover, when there are no active challenges (which will almost always be the case), the posted bond will be very small, so the opportunity cost of keeping a very large bond posted is eliminated.
 
-Note that we set the base bond price equal to ${P}$, which is the minimum possible to ensure we can reimburse honest gas costs using adversarial bonds. One can also easily verify that this is also the value which minimizes ${C}$.
+Note that we set the base bond price equal to ${P}$, which is the minimum possible to ensure we can reimburse honest gas costs using adversarial bonds. One can also easily verify that this is also the value that minimizes ${C}$.
 
 
 
 ## A hybrid strategy
 
-A useful observation is that if a defender has to fight off a large number of challenge assertions, it may well be cheaper to simply prove all the blocks of an assertion. In BoLD, an assertion is made once an hour with 4 blocks generated per second, for a total of \< 15K blocks. (This is much smaller than 2<sup>26</sup>, and the reason for using such a huge upper bound requires an examination of a number of details of BoLD that we will not get into here. Instead, we will simply use this 15K estimate.)
+A useful observation is that if a defender has to fight off a large number of challenge assertions, it may well be cheaper to simply prove all the blocks of an assertion. In BoLD, an assertion is made once an hour with 4 blocks generated per second, for a total of \< 15K blocks. (This is much smaller than 2<sup>26</sup>, and the reason for using such a huge upper bound requires an examination of several details of BoLD that we will not get into here. Instead, we will simply use this 15K estimate.)
 
-According to  [https://zkrollup.wtf/ethereum/g6.xlarge/reserved](https://zkrollup.wtf/ethereum/g6.xlarge/reserved) the average cost of proving an ethereum block is $0.088  (as measured at the time of writing, April 2025). We also have
+According to  [https://zkrollup.wtf/ethereum/g6.xlarge/reserved](https://zkrollup.wtf/ethereum/g6.xlarge/reserved) the average cost of proving an Ethereum block is 0.088 usd (as measured at the time of writing, April 2025). We also have
 * L1 has a gas target of 15M per block (12 seconds)  
 * Arbitrum One has a gas target of 7M per second.  
 
-So Arbitrum One has a target of 1.75M per block. So per Arbitrum One block, that’s $0.088 x 1.75/15 \= \~ $0.01. So that means the cost of simply proving the entire assertion as a ZK proof is about 150 usd. Using an exchange rate of 1 eth \= 2K usd, this is 0.075 eth. This is the proving cost of Ethereum blocks. Arbitrum actually uses an extension of EVM (Stylus) that allows for much greater computation per gas, so let’s multiply this cost by 10 to be on the safe side, obtaining a proving cost of 0.75 eth per assertion.
+So, Arbitrum One has a target of 1.75M per block. Per Arbitrum One block, that’s 0.088 usd x 1.75/15 \= \~ 0.01 usd, which means the cost of simply proving the entire assertion as a ZK proof is about 150 usd. Using an exchange rate of 1 eth \= 2K usd, this is 0.075 eth. This is the proving cost of Ethereum blocks. Arbitrum actually uses an extension of EVM (Stylus) that allows for much greater computation per gas, so let’s multiply this cost by 10 to be on the safe side, obtaining a proving cost of 0.75 eth per assertion.
 
-Using this, we can bound $C$ as follows. Let $A$ be the cost of generating a ZK proof plus the gas cost for verifying such a proof for the entire assertion
+Using this, we can bound $C$ as follows. Let $A$ be the cost of generating a ZK proof plus the gas cost for verifying such a proof for the entire assertion, so that:
 
 $$A = 0.75 \textrm{eth} + 0.03 \textrm{eth} \le 0.8 \textrm{eth}.$$
 
-It makes no sense to spend more than $A$ eth on gas fees, as we can more cheaply just generate the proof.
+It makes no sense to spend more than $A$ eth on gas fees, as we can more cheaply just generate the proof for the entire assertion.
 
 So we get 
 
@@ -115,11 +115,11 @@ Note that the above cost, which is the maximum cost regardless of the number of 
 
 The above observations raise the obvious question: if we are going to use ZK proofs at all, why not just use them to prove all assertions all of the time (as in a ZK rollup). The answer is that it is a tradeoff between expenses and delay. On the one hand, if we use the interactive fraud proof, and there are no challenge assertions, the only expense (beyond that of just posting the assertion) is the opportunity cost of keeping a single bond of 0.16eth tied up on L1 which is negligible (this expense is 16 usd per year, based on 5% interest rate) but we have the 7 day delay. On the other hand, if we only use ZK proofs, then we have the ongoing expense of generating ZK proofs, which could be as high as 0.8 eth per hour (so \~ 14M usd per year).
 
-Another reason one might not wish to rely solely on ZK proofs to prove everything is that one may not trust that ZK proof technology provides both safety and liveness. Of course, if one does not trust this technology at all, then it may not seem reasonable to use it for single-level BoLD or Dave. However, even without complete trust, it can still be useful in this setting, if one uses some form of “security council” as a backstop to failures of liveness and/or safety. While such a “security council” solution can work in an interactive fraud proof, it is not really useful in a pure ZK proof solution, as then one must take into account censorship attacks on the response of the security council, and then one is back to the same 7 day delay, and nothing is gained.
+Another reason one might not wish to rely solely on ZK proofs to prove everything is that one may not trust that ZK proof technology provides both safety and liveness. Of course, if one does not trust this technology at all, then it may not seem reasonable to use it for single-level BoLD or Dave. However, even without complete trust, it can still be useful in this setting, if one uses some form of “security council” as a backstop to failures of liveness and/or safety. While such a “security council” solution can work in an interactive fraud proof, it is not really useful in a pure ZK-proof solution, as then one must take into account censorship attacks on the response of the security council, and then one is back to the same 7 day delay, and nothing is gained.
 
 We can also significantly simplify the above hybrid interactive fraud proof protocol. We simply post an assertion, and if it is challenged, we post a ZK proof for the assertion. We still use timers and we still may use a security council backstop if we don’t fully trust the ZK proof technology. We would still have an inherent 7 day delay to protect against censorship attacks. For this solution, we must take $B \ge A$ to ensure that we can reimburse for the cost of proving and posting the assertion, so $B \ge 0.8 \textrm{eth}$ by the above estimates. So while simpler, the bond price for this protocol is higher (0.8eth vs 0.16eth, although this could change as ZK proving becomes cheaper).
 
-Another tradeoff to consider is that any protocol that involves ZK proving entire assertions may be criticized for having a somewhat centralized nature. At the very least, such a protocol may require some amount of coordination among honest parties to carry out a rather large scale distributed ZK proving computation. That said, the ZK proving can be fairly easily distributed among honest parties in a fairly trustless manner without too much coordination: different parties can generate proofs for different blocks, which can be verified by other honest parties and then “glued” together using standard recursion techniques (i.e., generating a proof that essentially says “I know proofs for a bunch of individual blocks”, which proves the entire assertion). The same type of criticism may also be directed towards single-level BoLD or one-round Dave, if the honest parties are required to generate many ZK proofs to defend against a large number of challengers.
+Another tradeoff to consider is that any protocol that involves ZK proving entire assertions may be criticized for having a somewhat centralized nature. At the very least, such a protocol may require some amount of coordination among honest parties to carry out a rather large-scale distributed ZK proving computation. That said, the ZK proving can be fairly easily distributed among honest parties in a fairly trustless manner without too much coordination: different parties can generate proofs for different blocks, which can be verified by other honest parties and then “glued” together using standard recursion techniques (i.e., generating a proof that essentially says “I know proofs for a bunch of individual blocks”, which proves the entire assertion). The same type of criticism may also be directed towards single-level BoLD or one-round Dave, if the honest parties are required to generate many ZK proofs to defend against a large number of challengers.
 
 
 
@@ -131,9 +131,9 @@ For example, by posting just 8 assertions, the adversary can cause the protocol 
    
 By contrast, neither (single-level) BoLD nor any of the variations discussed above have this characteristic: if the adversary does not actually censor, there is no additional delay above the usual 7 day delay (except for the small amount of time needed to make the necessary protocol moves, which is on the order of a few hours); moreover, if the adversary is able to censor up to 7 days, then the additional delay is (approximately) 7 days.
 
-In the Dave paper, it is suggested that very small bonds can be used – they suggest 3 eth. But if this is done, then the adversary can capriciously choose to significantly delay the protocol at quite low cost. For example, for just 3 eth, the adversary can cause an extra delay of 1.75 days, without actually censoring. Any additional delay incurs opportunity cost and a degraded user experience for users that want to withdraw assets, and the bond should be priced high enough to discourage imposing this additional delay. A reasonable strategy is to ensure that the bond price is at least the value of this opportunity cost.
+The Dave paper, suggests that very small bonds can be used – they suggest 3 eth. But if this is done, then the adversary can capriciously choose to significantly delay the protocol at quite low cost. For example, for just 3 eth, the adversary can cause an extra delay of 1.75 days, without actually censoring. Any additional delay incurs opportunity cost and a degraded user experience for users that want to withdraw assets, and the bond should be priced high enough to discourage imposing this additional delay. A reasonable strategy is to ensure that the bond price is at least the value of this opportunity cost.
 
-To be extremely conservative, consider a bank-run scenario. The Arbitrum One bridge ([https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a](https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a)) currently (as of April 2025\) contains about 1M eth. Assuming funds could earn 5% APY, then the opportunity cost of delaying the withdraw of 1M eth for 1.75 days is \~ 0.2K eth.  This is quite a bit larger than the bond price of 3 eth suggested in the Dave paper, which did not take such considerations into account at all. This is also significantly higher than the bond price of either of the hybrid protocols suggested above.
+To be extremely conservative, consider a bank-run scenario. The Arbitrum One bridge ([https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a](https://etherscan.io/address/0x8315177ab297ba92a06054ce80a67ed4dbd7ed3a)) currently (as of April 2025\) contains about 1M eth. Assuming funds could earn 5% APY, the opportunity cost of delaying the withdrawal of 1M eth for 1.75 days is \~ 0.2K eth.  This is quite a bit larger than the bond price of 3 eth suggested in the Dave paper, which did not take such considerations into account at all. This is also significantly higher than the bond price of either of the hybrid protocols suggested above.
 
 ## References:
 
