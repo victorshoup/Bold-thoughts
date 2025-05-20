@@ -81,7 +81,7 @@ Note: the estimate of 0.05 ETH for bisections in Dave is based on a sequence of 
 
 A dynamic bond strategy is given in the BoLD paper (Section 6.3 of \[4\]). While this does not decrease costs in the worst case, it does not require us to assume any particular value for the adversary’s budget – it scales automatically.
 
-The idea is this: we have a base bond price equal to $P$, and the $i$th assertion posted must post a bond of $i \times P$. 
+The idea is this: we have a base bond price equal to ${P}$, and the ${i}$th assertion posted must post a bond of ${i \times P}$. 
 
 To analyze this strategy, suppose the adversary posts $N$ assertions. We pessimistically assume the adversary arranges that the honest defender’s assertion is posted last. So the adversary pays bonds equal to \~ ${N^2/2 \times P}$, while the honest defender places a bond equal to \~ ${N \times P}$. If the adversary’ total budget is ${T}$, then he can post at most ${N \sim \sqrt{2T/P}}$ assertions. To the honest defender’s total cost is ${C \sim 2 N P = 2 \sqrt{ 2 T P}}$. This is a small constant factor greater than the cost ${\sqrt{T P}}$ calculated above, but we have the advantage that we do not need to know ${T}$ in advance to set an appropriate bond price. Moreover, when there are no active challenges (which will almost always be the case), the posted bond will be very small, so the opportunity cost of keeping a very large bond posted is eliminated.
 
