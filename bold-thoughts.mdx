@@ -107,9 +107,9 @@ It makes no sense to spend more than $A$ on gas fees, as we can more cheaply jus
 
 So we get 
 
-$$C \le 2 A + B \le 1.6\,\mathrm{ETH} + B.$$
+$$C \le 2 A + B \le 1.6 \mathrm{ETH} + B.$$
 
-To force the defender to spend $A$ on gas, the adversary must post $N$ bonds so that $N P \ge  A$, so $N 0.08 \ge 0.8$, or$ N \ge 10$. (Here, we are using the $P$ value taken from the above single-round Dave estimate.) So in other words, if the adversary makes $N$ assertions, where we can take $N=10$, we stop playing the interactive game and just post a single ZK proof for the entire assertion.  To ensure the defender can be reimbursed from confiscated bonds, we need $B \ge P$ and $N B \ge (N-1) P + A$. Using our estimates, we can take $B = 0.16 \textrm{ETH}$. Therefore, $C \le 2 A + B \le 1.6\,\mathrm{ETH} + 0.16\,\mathrm{ETH} \le 1.8\,\mathrm{ETH}$.
+To force the defender to spend $A$ on gas, the adversary must post $N$ bonds so that $N P \ge  A$, so $N 0.08 \ge 0.8$, or$ N \ge 10$. (Here, we are using the $P$ value taken from the above single-round Dave estimate.) So in other words, if the adversary makes $N$ assertions, where we can take $N=10$, we stop playing the interactive game and just post a single ZK proof for the entire assertion.  To ensure the defender can be reimbursed from confiscated bonds, we need $B \ge P$ and $N B \ge (N-1) P + A$. Using our estimates, we can take $B = 0.16 \textrm{ETH}$. Therefore, $C \le 2 A + B \le 1.6 \mathrm{ETH} + 0.16 \mathrm{ETH} \le 1.8 \mathrm{ETH}$.
 
 Note that the above cost, which is the maximum cost regardless of the number of challengers,  is less than that of defending against just two adversarial challengers using the Dave protocol. For Dave, the cost of defeating a single challenger in a full complement of 21 matches is roughly 1 ETH (= 21 x 0.05 ETH), and so for two challengers, the defender will have to do this twice.
 
