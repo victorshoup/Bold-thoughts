@@ -46,18 +46,18 @@ Table 3 of Dave paper \[1\] calculates the cost (in bond size plus gas) to defen
 
 We define $C$ to be the cost to defend against an adversary with budget $T$.  In the worst case, the adversary might create $T/B$ challenges.  Therefore:
 
-$$C \le (T/B) \times P + B.$$  
+$C \le (T/B) \times P + B.$  
 
 This is minimized when ${(T/B) \times P = B}$, or ${B = \sqrt{T P}}$. 
 So with ${B}$ set to ${\sqrt{T P}}$, we have 
 
-$$C = 2 \times \sqrt{T P}.$$
+$C = 2 \times \sqrt{T P}.$
 
 This justifies the claim made above that to defend against an adversary with a budget of $T$, the honest defender needs a budget of size proportional to $\sqrt{T}$.
 
 We can also define the <i>Griefing ratio</i>
 
-$$\rho := T/C =  0.5 \times \sqrt{T/P}.$$
+$\rho := T/C =  0.5 \times \sqrt{T/P}.$
 
 As in the Dave paper \[1\],  we set ${T}$ \= 3M ETH.  
 Using ${P}$ \= 1.3 ETH, we set $B := \sqrt{3M \times 1.3}$ ~ 2K ETH, which leads to ${C}$ \~ 4K ETH and $\rho$ \~ (3M)/(4K) \~ 0.75K.
@@ -101,13 +101,13 @@ So, Arbitrum One has a gas target of 1.75M per block. Per Arbitrum One block, th
 
 Using this, we can bound $C$ as follows. Let $A$ be the cost of generating a ZK proof for the entire assertion plus the gas cost for verifying such a proof, so that:
 
-$$A = 0.75 \mathrm{ETH} + 0.03 \mathrm{ETH} \le 0.8 \mathrm{ETH}.$$
+$A = 0.75 \mathrm{ETH} + 0.03 \mathrm{ETH} \le 0.8 \mathrm{ETH}.$
 
 It makes no sense to spend more than $A$ on gas fees, as we can more cheaply just generate the proof for the entire assertion.
 
 So we get 
 
-$$C \le 2 A + B \le 1.6 \mathrm{ETH} + B.$$
+$C \le 2 A + B \le 1.6 \mathrm{ETH} + B.$
 
 To force the defender to spend $A$ on gas, the adversary must post $N$ bonds so that $N P \ge  A$, so $N \times 0.08 \ge 0.8$, or $N \ge 10$. (Here, we are using the $P$ value taken from the above single-round Dave estimate.) So in other words, if the adversary makes $N$ assertions, where we can take $N=10$, we stop playing the interactive game and just post a single ZK proof for the entire assertion.  To ensure the defender can be reimbursed from confiscated bonds, we need $B \ge P$ and $N B \ge (N-1) P + A$. Using our estimates, we can take $B = 0.16 \textrm{ETH}$. Therefore, $C \le 2 A + B \le 1.6 \mathrm{ETH} + 0.16 \mathrm{ETH} \le 1.8 \mathrm{ETH}$.
 
